@@ -1,0 +1,74 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block content %}
+{% if message %}
+<script>
+alert("{{ message }}")
+</script>
+{% endif %}
+
+<div class="untree_co-hero inner-page overlay">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-12">
+          <div class="row justify-content-center ">
+            <div class="col-lg-6 text-center ">
+              <h1 class="mb-4 heading text-white" data-aos="fade-up" data-aos-delay="100">Update Product</h1>
+
+            </div>
+          </div>
+        </div>
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+
+  </div> <!-- /.untree_co-hero -->
+
+
+<br><br><br><br><br><br><br><br><br>
+
+  <div class="untree_co-section">
+    <div class="container">
+
+      <div class="row mb-5 justify-content-center">
+        <div class="col-lg-5 mx-auto order-1" data-aos="fade-up" data-aos-delay="200">
+          <form action="ProductUpdate" method="post" class="form-box" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                {% for product in product %}
+                <div class="col-12 mb-3">
+                    <input type="text" name="name" class="form-control" placeholder="Name" value="{{ product.name }}">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <input type="text" name="price" class="form-control" placeholder="Price" value="{{ product.price }}">
+                  </div>
+                  <div class="col-12 mb-3">
+                    <label for="food">Choose a Category:</label>
+
+                    <select name="category" id="food" class="form-control">
+                      <option value="Main Course">Main Course</option>
+                      <option value="Desserts">Desserts</option>
+                      <option value="Cakes">Cakes</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+              <div class="col-12 mb-3">
+                <label>Product Image</label>
+                <input type="file" name="image" class="form-control" placeholder="Image">
+              </div>
+              <input type="hidden" name="id" class="form-control" value="{{product.id}}" placeholder="Address" readonly>
+             
+
+              <div class="col-12">
+                <input type="submit" value="Add" class="btn btn-primary">
+              </div>
+              {% endfor %}
+            </div>
+          </form>
+        </div>
+      </div>
+
+      
+    </div>
+  </div> <!-- /.untree_co-section -->
+
+{% endblock %}

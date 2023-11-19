@@ -1,0 +1,53 @@
+{% extends 'agent/base.html' %}
+{% load static %}
+{% block content %}
+	
+{% if message %}
+<script>
+alert("{{ message }}")
+</script>
+{% endif %}
+
+<br><br><br><br><br>
+<div class="container add-emp">		
+    <center><h1 style="color:black;"><strong>Order Details</strong></h1><br></center>
+    <table class="table table-bordered table-hover">
+            <tr>			
+                
+                <th class="p-3 mb-2 bg-primary text-light">User Details</th>
+                <th class="p-3 mb-2 bg-primary text-light">Order Details</th>
+                <th class="p-3 mb-2 bg-primary text-light">Total</th>
+                <th class="p-3 mb-2 bg-primary text-light" colspan="2">Order Status</th>
+                
+                
+            </tr> 
+            
+            {% for x in pr %}
+            <tr>
+                   
+                    <td>Name: {{x.crt.customer.user.first_name}}<br>
+                        Email: {{x.crt.customer.user.email}}<br>
+                        Phone: {{x.crt.customer.phone}}<br>
+                        Address: {{x.crt.customer.address}}<br></td>
+                    <td><img src="{{x.crt.product.image.url}}" width="100px"><br>
+                        Name: {{x.crt.product.name}}<br>
+                         {{x.crt.product.category}}<br>
+                         price: ₹{{x.crt.product.price}}<br></td>
+                    <td>{{ x.crt.total }}</td>
+
+                    {% if x.status == 'delivered' %}
+                    <td>{{ x.status }}</td>
+                    {% else %}
+                    <td>{{ x.status }}</td>
+                    <td>
+                        <a href="UpdateStatus?id={{ x.id}}" class=" btn btn-success">Update Status</a></td>
+                 
+                    {% endif %}
+            </tr>  
+            {% endfor %}
+
+    </table>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'customer/base.html' %}
+{% load static %}
+{% block content %}
+	
+{% if message %}
+<script>
+alert("{{ message }}")
+</script>
+{% endif %}
+
+<br><br><br><br><br>
+<div class="container add-emp">		
+    <center><h1 style="color:black;"><strong>Order Details</strong></h1><br></center>
+    <table class="table table-bordered table-hover">
+            <tr>			
+                <th class="p-3 mb-2 bg-primary text-light">Order Details</th>
+                <th class="p-3 mb-2 bg-primary text-light">Total</th>
+                <th class="p-3 mb-2 bg-primary text-light">Order Status</th> 
+                <th class="p-3 mb-2 bg-primary text-light">Cancel Order</th> 
+                
+            </tr> 
+            
+            {% for x in pr %}
+            <tr>
+                    
+                    <td><img src="{{x.product.image.url}}" width="100px"><br>
+                        Name: {{x.product.name}}<br>
+                         {{x.product.category}}<br>
+                         price: ₹{{x.product.price}}<br></td>
+                    <td>{{ x.total }}</td>
+                    {% if x.status == 'added' %}
+                    <td>{{ x.status }}. Order will be assigned to Delivery Partner shortly </td>
+                    {% elif x.status == 'assigned' %}
+                    <td>{{ x.status }} to delivery partner</td>
+                    {% else %}
+                    <td>{{ x.status }}</td>
+                    {% endif %}
+                   {% if x.status == 'delivered' %}
+                   <td>---</td>
+                   {% else %}
+                    <td><a href="CancelOrder?id={{ x.id}}" class=" btn btn-danger">Cancel</a></td>
+                     {% endif %}
+                   
+            </tr>  
+            {% endfor %}
+
+    </table>
+</div>
+
+
+{% endblock %}

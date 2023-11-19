@@ -1,0 +1,65 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+{% block content %}
+	
+{% if message %}
+<script>
+alert("{{ message }}")
+</script>
+{% endif %}
+
+<br><br><br><br><br>
+<div class="container add-emp">		
+    <center><h1 style="color:black;"><strong>Order Details</strong></h1><br></center>
+    <table class="table table-bordered table-hover">
+            <tr>			
+                
+                <th class="p-3 mb-2 bg-primary text-light">User Details</th>
+                <th class="p-3 mb-2 bg-primary text-light">Order Details</th>
+                <th class="p-3 mb-2 bg-primary text-light">Total</th>
+                <th class="p-3 mb-2 bg-primary text-light">Order Status</th>
+                <th class="p-3 mb-2 bg-primary text-light">Assign Delivery Agent</th> 
+                
+            </tr> 
+            
+            {% for x in pr %}
+            <tr>
+                   
+                    <td>Name: {{x.customer.user.first_name}}<br>
+                        Email: {{x.customer.user.email}}<br>
+                        Phone: {{x.customer.phone}}<br>
+                        Address: {{x.customer.address}}<br></td>
+                    <td><img src="{{x.product.image.url}}" width="100px"><br>
+                        Name: {{x.product.name}}<br>
+                         {{x.product.category}}<br>
+                         price: ₹{{x.product.price}}<br></td>
+                    <td>{{ x.total }}</td>
+
+                    {% if x.status == 'assigned' %}
+                    <td>{{ x.status }}<br><br>
+                        <a href="UpdateStatus?id={{ x.id}}" class=" btn btn-success">Update Status</a></td>
+                    {% elif x.status == 'pickup' %}
+                        <td>{{ x.status }}<br><br>
+                            <a href="UpdateStatus?id={{ x.id}}" class=" btn btn-success">Update Status</a></td>
+
+                    {% elif x.status == 'delay' %}
+                            <td>{{ x.status }}<br><br>
+                                <a href="UpdateStatus?id={{ x.id}}" class=" btn btn-success">Update Status</a></td>
+                    {% else %}
+                    <td>{{ x.status }}</td>
+                    {% endif %}
+
+                   {% if x.status == 'added' %}
+                   <td><a href="AssignOrder?id={{ x.id}}" class=" btn btn-success">Assign</a></td>
+                   {% else %}
+                   <td>---</td>
+                     {% endif %}
+                   
+            </tr>  
+            {% endfor %}
+
+    </table>
+</div>
+
+
+{% endblock %}
